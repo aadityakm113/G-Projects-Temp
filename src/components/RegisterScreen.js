@@ -47,6 +47,30 @@ export default function RegisterScreen() {
       alert(error)
     }
   }
+
+  function googleLogin(){
+    const { data, error } = supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        queryParams: {
+          access_type: 'offline',
+          prompt: 'consent',
+        },
+      },
+    })
+  }
+
+  async function githubLogin() {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'github',
+    })
+  }
+  
+  async function signOut() {
+    const { error } = await supabase.auth.signOut()
+  }
+  
+
   return (
     <div className="bg-black h-screen w-screen flex place-content-center items-center">
       <div className="bg-white h-4/5 w-2/3 rounded-lg grid grid-cols-2">
@@ -107,7 +131,7 @@ export default function RegisterScreen() {
           
           <div className="socials text-slate-500 flex justify-center mt-2">
             
-            <button className="flex text-xs mr-8 shadow-lg p-1">
+            <button className="flex text-xs mr-8 shadow-lg p-1" onClick={googleLogin}>
               <img
                 src={google_small}
                 style={{ height: "25px", width: "25px" }}
@@ -115,7 +139,7 @@ export default function RegisterScreen() {
               <div className="mt-1">Register in with Google</div>
             </button>
             
-            <button className="flex text-xs shadow-lg p-1">
+            <button className="flex text-xs shadow-lg p-1" onClick={githubLogin}>
               <img
                 src={github_small}
                 style={{ height: "23px", width: "23px" }}
@@ -132,3 +156,4 @@ export default function RegisterScreen() {
     </div>
   );
 }
+

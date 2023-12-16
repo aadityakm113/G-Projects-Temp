@@ -4,6 +4,8 @@ import github_logo from "../images/GITHUB.png";
 import google_icon from "../images/google_icon.svg";
 import github_icon from "../images/github_icon.svg"
 import supabase from "../client";
+import { redirect } from "react-router-dom";
+
 
 
 function LoginScreen() {
@@ -43,23 +45,35 @@ function LoginScreen() {
     }
   }
 
-  // async function googleLogin(){
-  //   try {
-  //     const { data, error } = await supabase.auth.signInWithOAuth({
-  //       provider: 'google',
-  //       options: {
-  //         queryParams: {
-  //           access_type: 'offline',
-  //           prompt: 'consent',
-  //         },
-  //       },
-  //     })
-      
-  //   } catch (error) {
-      
-  //   }
+  
+  console.log(supabase)
+
+  function googleLogin(){
+    const { data, error } = supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        queryParams: {
+          access_type: 'offline',
+          prompt: 'consent',
+        },
+      },
+    })
     
-  // }
+  }
+
+
+  async function githubLogin() {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'github',
+    })
+  }
+  console.log(supabase)
+
+  async function signOut() {
+    const { error } = await supabase.auth.signOut()
+  }
+  
+  
     return(
         <div className="bg-black h-screen w-screen flex place-content-center items-center">
             <div className="bg-white h-4/5 w-2/3 rounded-lg grid grid-cols-2">
@@ -100,14 +114,14 @@ function LoginScreen() {
           <p className="text-left ml-16 text-base font-normal">
             Login with Social
           </p>
-          <div className="text-slate-500 flex justify-center mt-2">
+          <div className="text-slate-500 flex justify-center mt-2" >
             
-            <button className="flex text-xs mr-8 shadow-lg p-1" >
+            <button className="flex text-xs mr-8 shadow-lg p-1" onClick={googleLogin}>
               <img src={google_icon} className="mt-4"  alt="google_icon"/>
               <span className="mt-7">Sign in with Google</span>
             </button>
 
-            <button className="flex text-xs shadow-lg p-1">
+            <button className="flex text-xs shadow-lg p-1" onClick={githubLogin}>
               <img src={github_icon} className="mt-5" style={{ height: "23px", width: "23px" }} alt="github_icon"/>
               <div className="mt-6">Sign in with GitHub</div>
             </button>

@@ -3,6 +3,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RegisterScreen from "./components/RegisterScreen.js";
 import LoginScreen from './components/LoginScreen.js';
+
 function App() {
   return (
     <div className="App">
@@ -10,6 +11,7 @@ function App() {
           <Routes>
             <Route path='/' element={<RegisterScreen/>}/>
             <Route path='/login' element={<LoginScreen/>}/>
+            
           </Routes>
         </BrowserRouter>
     </div>
